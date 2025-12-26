@@ -33,16 +33,16 @@ public:
     QWidget *centralwidget;
     QLabel *titleLabel;
     QStackedWidget *stackedWidget;
-    QWidget *loginPage;
+    QWidget *chatPage;
     QVBoxLayout *verticalLayout_2;
     QHBoxLayout *horizontalLayout;
-    QTextEdit *textEdit;
-    QListWidget *listWidget;
+    QTextEdit *roomTextEdit;
+    QListWidget *userListWidget;
     QHBoxLayout *horizontalLayout_2;
-    QLineEdit *lineEdit;
+    QLineEdit *sayLineEdit;
     QPushButton *sayButton;
     QPushButton *logoutButton;
-    QWidget *chatPage;
+    QWidget *loginPage;
     QGridLayout *gridLayout_2;
     QSpacerItem *verticalSpacer_2;
     QSpacerItem *horizontalSpacer;
@@ -62,7 +62,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(507, 383);
+        MainWindow->resize(493, 384);
         MainWindow->setStyleSheet(QString::fromUtf8("#titleLabel {\n"
 "    background:white;\n"
 "    border:none;\n"
@@ -89,43 +89,43 @@ public:
         centralwidget->setObjectName("centralwidget");
         titleLabel = new QLabel(centralwidget);
         titleLabel->setObjectName("titleLabel");
-        titleLabel->setGeometry(QRect(20, 35, 211, 31));
+        titleLabel->setGeometry(QRect(20, 35, 451, 31));
         stackedWidget = new QStackedWidget(centralwidget);
         stackedWidget->setObjectName("stackedWidget");
-        stackedWidget->setGeometry(QRect(40, 90, 421, 251));
-        loginPage = new QWidget();
-        loginPage->setObjectName("loginPage");
-        verticalLayout_2 = new QVBoxLayout(loginPage);
+        stackedWidget->setGeometry(QRect(20, 70, 461, 301));
+        chatPage = new QWidget();
+        chatPage->setObjectName("chatPage");
+        verticalLayout_2 = new QVBoxLayout(chatPage);
         verticalLayout_2->setObjectName("verticalLayout_2");
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName("horizontalLayout");
-        textEdit = new QTextEdit(loginPage);
-        textEdit->setObjectName("textEdit");
+        roomTextEdit = new QTextEdit(chatPage);
+        roomTextEdit->setObjectName("roomTextEdit");
 
-        horizontalLayout->addWidget(textEdit);
+        horizontalLayout->addWidget(roomTextEdit);
 
-        listWidget = new QListWidget(loginPage);
-        listWidget->setObjectName("listWidget");
-        listWidget->setMaximumSize(QSize(120, 16777215));
+        userListWidget = new QListWidget(chatPage);
+        userListWidget->setObjectName("userListWidget");
+        userListWidget->setMaximumSize(QSize(120, 16777215));
 
-        horizontalLayout->addWidget(listWidget);
+        horizontalLayout->addWidget(userListWidget);
 
 
         verticalLayout_2->addLayout(horizontalLayout);
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName("horizontalLayout_2");
-        lineEdit = new QLineEdit(loginPage);
-        lineEdit->setObjectName("lineEdit");
+        sayLineEdit = new QLineEdit(chatPage);
+        sayLineEdit->setObjectName("sayLineEdit");
 
-        horizontalLayout_2->addWidget(lineEdit);
+        horizontalLayout_2->addWidget(sayLineEdit);
 
-        sayButton = new QPushButton(loginPage);
+        sayButton = new QPushButton(chatPage);
         sayButton->setObjectName("sayButton");
 
         horizontalLayout_2->addWidget(sayButton);
 
-        logoutButton = new QPushButton(loginPage);
+        logoutButton = new QPushButton(chatPage);
         logoutButton->setObjectName("logoutButton");
 
         horizontalLayout_2->addWidget(logoutButton);
@@ -133,20 +133,20 @@ public:
 
         verticalLayout_2->addLayout(horizontalLayout_2);
 
-        stackedWidget->addWidget(loginPage);
-        chatPage = new QWidget();
-        chatPage->setObjectName("chatPage");
-        gridLayout_2 = new QGridLayout(chatPage);
+        stackedWidget->addWidget(chatPage);
+        loginPage = new QWidget();
+        loginPage->setObjectName("loginPage");
+        gridLayout_2 = new QGridLayout(loginPage);
         gridLayout_2->setObjectName("gridLayout_2");
-        verticalSpacer_2 = new QSpacerItem(20, 54, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+        verticalSpacer_2 = new QSpacerItem(20, 79, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
         gridLayout_2->addItem(verticalSpacer_2, 0, 1, 1, 1);
 
-        horizontalSpacer = new QSpacerItem(98, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+        horizontalSpacer = new QSpacerItem(118, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
         gridLayout_2->addItem(horizontalSpacer, 1, 0, 1, 1);
 
-        loginFrame = new QFrame(chatPage);
+        loginFrame = new QFrame(loginPage);
         loginFrame->setObjectName("loginFrame");
         loginFrame->setFrameShape(QFrame::Shape::StyledPanel);
         loginFrame->setFrameShadow(QFrame::Shadow::Raised);
@@ -189,15 +189,15 @@ public:
 
         gridLayout_2->addWidget(loginFrame, 1, 1, 1, 1);
 
-        horizontalSpacer_2 = new QSpacerItem(98, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+        horizontalSpacer_2 = new QSpacerItem(118, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
         gridLayout_2->addItem(horizontalSpacer_2, 1, 2, 1, 1);
 
-        verticalSpacer_3 = new QSpacerItem(20, 54, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+        verticalSpacer_3 = new QSpacerItem(20, 79, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
         gridLayout_2->addItem(verticalSpacer_3, 2, 1, 1, 1);
 
-        stackedWidget->addWidget(chatPage);
+        stackedWidget->addWidget(loginPage);
         MainWindow->setCentralWidget(centralwidget);
 
         retranslateUi(MainWindow);
