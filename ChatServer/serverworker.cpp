@@ -1,13 +1,14 @@
 #include "serverworker.h"
 #include <QDataStream>
-#include <QJsonObject>
 #include <QJsonDocument>
+#include <QJsonObject>
 
-ServerWorker::ServerWorker(QObject *parent)    : QObject{parent}
+ServerWorker::ServerWorker(QObject *parent)
+    : QObject{parent}
 {
     m_serverSocket = new QTcpSocket(this);
     connect(m_serverSocket, &QTcpSocket::readyRead, this, &ServerWorker::onReadyRead);
-
+    connect(m_serverSocket, &QTcpSocket::disconnected, this, &ServerWorker::disconnectedFromClient);
 }
 
 bool ServerWorker::setSocketDescriptor(qintptr socketDescriptor)
@@ -30,25 +31,24 @@ void ServerWorker::onReadyRead()
     QByteArray jsonData;
     QDataStream socketStream(m_serverSocket);
     socketStream.setVersion(QDataStream::Qt_6_9);
-
-    // start an infinite loop
-    for (;;) {
+    for(;;){
         socketStream.startTransaction();
-        socketStream >> jsonData;
-
-        if (socketStream.commitTransaction()) {
+        socketStream >>jsonData;
+        if(socketStream.commitTransaction()){
             // emit logMessage(QString::fromUtf8(jsonData));
-            // sendMessage("I received message");
+            // sendMessage("I recieved message");
 
             QJsonParseError parseError;
-            const QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData, &parseError);
-            if (parseError.error == QJsonParseError::NoError) {
-                if (jsonDoc.isObject()) {
+            const QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData,&parseError);
+            if(parseError.error == QJsonParseError::NoError){
+                if(jsonDoc.isObject()){
                     emit logMessage(QJsonDocument(jsonDoc).toJson(QJsonDocument::Compact));
                     emit jsonReceived(this, jsonDoc.object());
                 }
             }
-        } else {
+
+
+        }else{
             break;
         }
     }
@@ -56,21 +56,16 @@ void ServerWorker::onReadyRead()
 
 void ServerWorker::sendMessage(const QString &text, const QString &type)
 {
-    if (m_serverSocket->state() != QAbstractSocket::ConnectedState)
+    if(m_serverSocket->state() != QAbstractSocket::ConnectedState)
         return;
-
-    if (!text.isEmpty()) {
-        // create a QDataStream operating on the socket
+    if(!text.isEmpty()){
         QDataStream serverStream(m_serverSocket);
-        // 适配Qt 6.9.2的QDataStream版本（Qt 6的版本宏以Qt_6_开头）
-        serverStream.setVersion(QDataStream::Qt_6_0);
+        serverStream.setVersion(QDataStream::Qt_6_9);
 
-        // Create the JSON we want to send
         QJsonObject message;
         message["type"] = type;
         message["text"] = text;
 
-        // send the JSON using QDataStream
         serverStream << QJsonDocument(message).toJson();
     }
 }
@@ -79,9 +74,7 @@ void ServerWorker::sendJson(const QJsonObject &json)
 {
     const QByteArray jsonData = QJsonDocument(json).toJson(QJsonDocument::Compact);
     emit logMessage(QLatin1String("Sending to ") + userName() + QLatin1String(" - ") + QString::fromUtf8(jsonData));
-
     QDataStream socketStream(m_serverSocket);
-    socketStream.setVersion(QDataStream::Qt_6_0);
+    socketStream.setVersion(QDataStream::Qt_6_9);
     socketStream << jsonData;
 }
-

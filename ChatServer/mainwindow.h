@@ -28,6 +28,5 @@ private:
     Ui::MainWindow *ui;
 
     ChatServer *m_chatServer;
-
 };
 #endif // MAINWINDOW_H
